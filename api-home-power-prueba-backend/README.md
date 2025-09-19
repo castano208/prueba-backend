@@ -37,7 +37,24 @@ PUT    /products/:id      - Actualizar producto
 DELETE /products/:id      - Eliminar producto
 ```
 
-### 🧪 Ejecutar Pruebas
+### 💻 Configuración y Ejecución Local
+
+Para correr la API en tu máquina local, sigue estos pasos:
+
+Claro, puedo corregir la sintaxis para que quede bien en Markdown y sea legible en el README. Aquí está la versión corregida:  
+
+```markdown
+#### 1️⃣ Instalar dependencias
+```bash
+npm install
+```
+
+#### 2️⃣ Configurar variables de entorno y generar cliente Prisma
+```bash
+npx prisma generate
+```
+
+### 🧪 Ejecutar pruebas
 ```bash
 npm test
 ```

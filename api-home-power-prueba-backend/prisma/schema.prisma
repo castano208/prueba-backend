@@ -3,22 +3,35 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// Configuración de la base de datos PostgreSQL
-// Para base de datos remota en Render
+// Configuración de la base de datos SQLite local
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-  schemas  = ["homePowerPruebaBackend"]
+  provider = "sqlite"        // Cambiar a "postgresql" para base de datos remota
+  url      = "file:./dev.db" // Usar env("DATABASE_URL") para producción remota
+  // schemas solo aplica para PostgreSQL remoto
+  // schemas = ["homePowerPruebaBackend"]
 }
 
-// Modelo de datos para la entidad Producto
+// Modelo de datos para la entidad Producto (local SQLite)
 model Producto {
   id        String   @id @default(uuid())  // Clave primaria UUID generada automáticamente
   nombre    String                         // Nombre del producto (campo requerido)
-  precio    Decimal  @db.Decimal(10,2)     // Precio con 2 decimales máximo (10 dígitos totales, 2 decimales)
+  precio    Float                          // Precio como número flotante (SQLite no soporta Decimal nativo)
   stock     Int                            // Cantidad en inventario (número entero)
   createdAt DateTime @default(now())       // Timestamp de creación automático
   updatedAt DateTime @updatedAt            // Timestamp de actualización automático
-
-  @@schema("homePowerPruebaBackend")       // Especifica el esquema de la base de datos
 }
+
+/*
+  Modelo de datos para la base remota PostgreSQL:
+
+  model Producto {
+    id        String   @id @default(uuid())  // Clave primaria UUID generada automáticamente
+    nombre    String                         // Nombre del producto (campo requerido)
+    precio    Decimal  @db.Decimal(10,2)     // Precio con 2 decimales máximo (10 dígitos totales, 2 decimales)
+    stock     Int                            // Cantidad en inventario (número entero)
+    createdAt DateTime @default(now())       // Timestamp de creación automático
+    updatedAt DateTime @updatedAt            // Timestamp de actualización automático
+
+    @@schema("homePowerPruebaBackend")       // Especifica el esquema de la base de datos remota
+  }
+*/
