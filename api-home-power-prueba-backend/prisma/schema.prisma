@@ -1,0 +1,24 @@
+// Generador del cliente Prisma para TypeScript
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Configuración de la base de datos PostgreSQL
+// Para base de datos remota en Render
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  schemas  = ["homePowerPruebaBackend"]
+}
+
+// Modelo de datos para la entidad Producto
+model Producto {
+  id        String   @id @default(uuid())  // Clave primaria UUID generada automáticamente
+  nombre    String                         // Nombre del producto (campo requerido)
+  precio    Decimal  @db.Decimal(10,2)     // Precio con 2 decimales máximo (10 dígitos totales, 2 decimales)
+  stock     Int                            // Cantidad en inventario (número entero)
+  createdAt DateTime @default(now())       // Timestamp de creación automático
+  updatedAt DateTime @updatedAt            // Timestamp de actualización automático
+
+  @@schema("homePowerPruebaBackend")       // Especifica el esquema de la base de datos
+}
